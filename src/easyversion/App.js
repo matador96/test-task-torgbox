@@ -1,46 +1,51 @@
 import React from "react";
 import { Form, Row, Container, Col } from "react-bootstrap";
 import Clock from "react-clock";
-import { connect } from "react-redux";
 
-const mapStateToProps = (state) => {
-  return { clockstore: { firstclock: state[0], secondclock: state[1] } };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setTimezone: (timezone) =>
-      dispatch({ type: "SET_TIMEZONE", fixgmt: timezone }),
-  };
-};
-
-class App extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      timefirst: this.props.clockstore.firstclock.date,
-      timesecond: this.props.clockstore.secondclock.date,
-      timezonefirst: this.props.clockstore.firstclock.timezone,
-      timezonesecond: this.props.clockstore.secondclock.timezone,
+      timefirst: this.props.clockStore.getState()[0],
+      timesecond: this.props.clockStore.getState()[1],
+      timezonefirst: 7,
+      timezonesecond: 3,
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    setInterval(() => {
+    const clockStore = this.props.clockStore;
+    clockStore.subscribe(() => {
+      const timenowfirst = clockStore.getState()[0];
+      const timenowsecond = clockStore.getState()[1];
+      const firsttime = this.TimeZoneAdd(
+        this.state.timezonefirst,
+        timenowfirst
+      );
+      const secondtime = this.TimeZoneAdd(
+        this.state.timezonesecond,
+        timenowsecond
+      );
+
       this.setState({
-        timefirst: this.props.clockstore.firstclock.date,
-        timesecond: this.props.clockstore.secondclock.date,
+        timefirst: firsttime,
+        timesecond: secondtime,
       });
-    }, 1000);
+    });
   }
-  handleChange(e) {
-    this.setState({ [e.target.name]: parseInt(e.target.value) }, () =>
-      this.props.setTimezone({
-        timezonefirst: this.state.timezonefirst,
-        timezonesecond: this.state.timezonesecond,
-      })
+
+  TimeZoneAdd(gmt, date) {
+    let setdate = date;
+    let sethours = setdate.setHours(
+      setdate.getHours() + setdate.getTimezoneOffset() / 60 + gmt
     );
+
+    return new Date(sethours);
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: parseInt(e.target.value) });
   }
 
   render() {
@@ -96,17 +101,3 @@ const timezones = [
   { label: "Красноярск", value: 7 },
   { label: "Москва", value: 3 },
 ];
-
-const ConnectRedux = connect(mapStateToProps, mapDispatchToProps)(App);
-
-export default ConnectRedux;
-
-/*   TimeZoneAdd(gmt, date) {
-    let setdate = date;
-    let sethours = setdate.setHours(
-      setdate.getHours() + setdate.getTimezoneOffset() / 60 + gmt
-    );
-
-    return new Date(sethours);
-  }
-*/
