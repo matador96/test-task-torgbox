@@ -100,13 +100,3 @@ const timezones = [
 const ConnectRedux = connect(mapStateToProps, mapDispatchToProps)(App);
 
 export default ConnectRedux;
-
-/*   TimeZoneAdd(gmt, date) {
-    let setdate = date;
-    let sethours = setdate.setHours(
-      setdate.getHours() + setdate.getTimezoneOffset() / 60 + gmt
-    );
-
-    return new Date(sethours);
-  }
-*/
