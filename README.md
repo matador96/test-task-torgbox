@@ -1,19 +1,17 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 # Разработать веб-страницу с часами для двух часовых поясов.
 
 React/Redux + Bootstrap + react-clock
-
-# Краткое описание от себя
-
-Не очень понял зачем здесь редакс, но попытался использовать его по максимуму (первый раз использовал, обычно Context API юзаю).
-В репозитории есть папка '/src/easyversion' - тоже с редаксом просто попроще вариант, не знаю насколько верный можете его на главную папку (/src) переместить, с заменой, и удалить папку store).
 
 # Результат
 
 ![hippo](https://github.com/matador96/test-task-torgbox/blob/master/stuff/testclock.gif)
 
-## Тестовое задание Torgbox
+# От себя
+
+Не очень понял зачем здесь редакс, но попытался использовать его по максимуму (первый раз использовал, обычно Context API юзаю).
+В репозитории есть папка '/src/easyversion' - тоже с редаксом просто попроще вариант, не знаю насколько верный можете его на главную папку (/src) переместить, с заменой, и удалить папку store).
+
+## Тестовое задание от Torgbox
 
 ![Иллюстрация к проекту](https://github.com/matador96/test-task-torgbox/blob/master/stuff/img.png?raw=true)
 
